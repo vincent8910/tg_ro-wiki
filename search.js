@@ -27,7 +27,17 @@
       });
       if(count)count.textContent='顯示 '+shown+'／'+rows.length+' 筆';
     }
-    box.addEventListener('input',apply);filters.forEach(function(f){f.addEventListener('change',apply);});
+    var kindFilter=filters.find(function(f){return f.dataset.column==='kind';});
+  var weaponFilter=filters.find(function(f){return f.dataset.column==='weapon';});
+  box.addEventListener('input',apply);
+  filters.forEach(function(f){f.addEventListener('change',function(){
+   // 先協調分類再篩選，避免選了單手劍卻被「防具」條件擋住。
+   if(kindFilter&&weaponFilter){
+    if(f===weaponFilter&&weaponFilter.value)kindFilter.value='武器';
+    if(f===kindFilter&&kindFilter.value!=='武器')weaponFilter.value='';
+   }
+   apply();
+  });});
     // 網址帶 ?q= 時直接搜尋（例如首頁卡片連到「道具 → 卡片」）
     var m=location.search.match(/[?&]q=([^&]*)/);if(m){box.value=decodeURIComponent(m[1]);}
     var k=location.search.match(/[?&]kind=([^&]*)/);
