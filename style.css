@@ -96,3 +96,6 @@ footer{max-width:1080px;margin:28px auto 0;padding:16px;color:var(--muted);font-
   .tw.cards td:first-child::before{display:none}
   .tw.cards td:empty{display:none}
 }
+
+/* 長條件／精煉公式在列表與手機卡片均可換行，不強制縮字。 */
+.effect-copy{white-space:normal;overflow-wrap:anywhere;word-break:normal;line-height:1.65}
